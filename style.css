@@ -22,6 +22,10 @@ body{
     text-transform: uppercase;
     font-weight: 600;
 }
+#value-container, #whos-turn{
+    text-align: center;
+    margin-top: 1rem;
+}
 
 .intput-field{
     padding: 2rem;
@@ -59,12 +63,11 @@ body{
     cursor: pointer;
     background-color: green;
 }
-#value-container{
-    
-}
 #loading{
     width: 100px;
     background-color: transparent;
+    display: block;
+    margin: 30px auto;
 
 }   
 #btn-inner-container{

@@ -93,6 +93,24 @@
             document.getElementById("others-player-name").innerText = othersPlayername
             document.getElementById("value").innerText = value 
         })
+
+        document.querySelectorAll(".btn").forEach(e =>{
+            e.addEventListener("click", () =>{
+                let value = document.getElementById("value").innerText
+                e.innerText = value 
+
+                socket.emit("playing", {value: value, id: e.id, name: name})
+            })
+        })
+
+        socket.on("playing", (e) =>{
+            // let foundPlayer = (e.allPlayers).find(player => player.p1.p1name == `${name}` || player.p2.p2name == `${name}`)
+            // p1id = foundPlayer.p1.p1move
+            // p2id = foundPlayer.p2.p2move
+
+            console.log(e);
+            
+        })
     </script>
 </body>
 

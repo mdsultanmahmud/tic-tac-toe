@@ -36,7 +36,8 @@ io.on("connection", (socket) =>{
 
                 let playerpair = {
                     p1: player1,
-                    p2: player2
+                    p2: player2,
+                    count: 1
                 }
 
                 allPlayers.push(playerpair)
@@ -45,6 +46,21 @@ io.on("connection", (socket) =>{
                 io.emit("players", {players: allPlayers})
             }
         }
+    })
+
+    socket.on("playing", (e) =>{
+        if(e.value === "X"){
+            let playerMove = allPlayers.find(player => player.p1.p1name === e.name)
+            playerMove.p1.p1move = e.id 
+            playerMove.count++
+        }
+        else if(e.value === "O"){
+            let playerMove = allPlayers.find(player => player.p2.p2name === e.name)
+            playerMove.p2.p2move = e.id 
+            playerMove.count++
+        }
+
+        io.emit("playing", {allPlayers: allPlayers})
     })
 })
 
