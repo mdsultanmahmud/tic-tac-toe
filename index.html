@@ -1,13 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>play tic tac toe</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <h1>Tic Tac Toe</h1>
-    <h2>hi, we are playing tic tac toe</h2>
+    <h1 class="game-title">Tic Tac Toe</h1>
+    <div class="player-container">
+        <p id="user-container">You: <span id="user-name"></span></p>
+        <p id="others-container">Others player: <span id="others-player-name"></span></p>
+    </div>
+    <p id="value-container">You are playing as <span id="value"></span></p>
+    <p id="whos-turn">X's Turn</p>
+    <div class="intput-field">
+        <label for="name">Enter Your Name: </label>
+        <input type="text" id="name" placeholder="name" autocomplete="off">
+        <br>
+        <button id="search-player">Search Player</button>
+    </div>
+    
+    <img class="loading" id="loading" src="assets/loading2.gif" alt="">
+
+    <div id="btn-container">
+        <div id="btn-inner-container">
+            <button id="btn1" class="btn"></button>
+            <button id="btn2" class="btn"></button>
+            <button id="btn3" class="btn"></button>
+            <button id="btn4" class="btn"></button>
+            <button id="btn5" class="btn"></button>
+            <button id="btn6" class="btn"></button>
+            <button id="btn7" class="btn"></button>
+            <button id="btn8" class="btn"></button>
+            <button id="btn9" class="btn"></button>
+        </div>
+    </div>
 </body>
+
 </html>
