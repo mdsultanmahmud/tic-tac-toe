@@ -59,21 +59,39 @@
         const socket = io()
         let name
 
-        searchPlayer.addEventListener('click', () =>{
-            name = document.getElementById("name").value 
-            document.getElementById("user-name").innerText = name 
-            if(name == null || name == ''){
+        // manage players 
+        searchPlayer.addEventListener('click', () => {
+            name = document.getElementById("name").value
+            document.getElementById("user-name").innerText = name
+            if (name == null || name == '') {
                 alert("Please enter your name!!")
-            }else {
-                socket.emit("manage-player", {name: name })
+            } else {
+                socket.emit("manage-player", { name: name })
                 loading.style.display = "block"
-                searchPlayer.disabled = true 
+                searchPlayer.disabled = true
             }
         })
 
-        socket.on("players", (e) =>{
-            let allPlayers = e.players 
-            console.log(allPlayers)
+        socket.on("players", (e) => {
+            let allPlayers = e.players
+            document.querySelector(".intput-field").style.display = "none"
+            playerContainer.style.display = "flex"
+            valueContainer.style.display = "block"
+            whosTurn.style.display = "block"
+            whosTurn.innerText = "X's Turn"
+            loading.style.display = "none"
+            btnContainer.style.display = "block"
+
+
+            let othersPlayername
+            let value 
+
+            let foundPlayer = allPlayers.find(player => player.p1.p1name == `${name}` || player.p2.p2name == `${name}`)
+            foundPlayer.p1.p1name == `${name}` ? othersPlayername = foundPlayer.p2.p2name : othersPlayername = foundPlayer.p1.p1name
+            foundPlayer.p1.p1name == `${name}` ? value = foundPlayer.p2.p2value : value = foundPlayer.p1.p1value
+            
+            document.getElementById("others-player-name").innerText = othersPlayername
+            document.getElementById("value").innerText = value 
         })
     </script>
 </body>
