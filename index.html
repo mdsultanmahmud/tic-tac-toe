@@ -88,7 +88,7 @@
 
             let foundPlayer = allPlayers.find(player => player.p1.p1name == `${name}` || player.p2.p2name == `${name}`)
             foundPlayer.p1.p1name == `${name}` ? othersPlayername = foundPlayer.p2.p2name : othersPlayername = foundPlayer.p1.p1name
-            foundPlayer.p1.p1name == `${name}` ? value = foundPlayer.p2.p2value : value = foundPlayer.p1.p1value
+            foundPlayer.p1.p1name == `${name}` ? value = foundPlayer.p1.p1value : value = foundPlayer.p2.p2value
             
             document.getElementById("others-player-name").innerText = othersPlayername
             document.getElementById("value").innerText = value 
@@ -104,11 +104,24 @@
         })
 
         socket.on("playing", (e) =>{
-            // let foundPlayer = (e.allPlayers).find(player => player.p1.p1name == `${name}` || player.p2.p2name == `${name}`)
-            // p1id = foundPlayer.p1.p1move
-            // p2id = foundPlayer.p2.p2move
+            let foundPlayer = (e.allPlayers).find(player => player.p1.p1name == `${name}` || player.p2.p2name == `${name}`)
+            p1id = foundPlayer.p1.p1move
+            p2id = foundPlayer.p2.p2move
 
-            console.log(e);
+            if(foundPlayer.count % 2 == 0){
+                whosTurn.innerText = "O's Turn"
+            } else{
+                whosTurn.innerText = "X's Turn"
+            }
+
+            if(p1id != ''){
+                document.getElementById(`${p1id}`).innerText = "X"
+                document.getElementById(`${p1id}`).disabled = true               
+            }
+            if(p2id != ''){
+                document.getElementById(`${p2id}`).innerText = "O"
+                document.getElementById(`${p2id}`).disabled = true               
+            }
             
         })
     </script>
