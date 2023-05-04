@@ -23,8 +23,8 @@
         <br>
         <button id="search-player">Search Player</button>
     </div>
-    
-    <img class="loading" id="loading" src="assets/loading2.gif" alt="">
+
+    <img id="loading" src="assets/loading2.gif" alt="">
 
     <div id="btn-container">
         <div id="btn-inner-container">
@@ -39,6 +39,43 @@
             <button id="btn9" class="btn"></button>
         </div>
     </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // select some field 
+        const playerContainer = document.querySelector(".player-container")
+        const valueContainer = document.getElementById('value-container')
+        const whosTurn = document.getElementById("whos-turn")
+        const loading = document.getElementById("loading")
+        const btnContainer = document.getElementById("btn-container")
+        const searchPlayer = document.getElementById("search-player")
+        // display hidden some filed 
+        playerContainer.style.display = "none"
+        valueContainer.style.display = "none"
+        whosTurn.style.display = "none"
+        loading.style.display = "none"
+        btnContainer.style.display = "none"
+
+        // require socket.io
+        const socket = io()
+        let name
+
+        searchPlayer.addEventListener('click', () =>{
+            name = document.getElementById("name").value 
+            document.getElementById("user-name").innerText = name 
+            if(name == null || name == ''){
+                alert("Please enter your name!!")
+            }else {
+                socket.emit("manage-player", {name: name })
+                loading.style.display = "block"
+                searchPlayer.disabled = true 
+            }
+        })
+
+        socket.on("players", (e) =>{
+            let allPlayers = e.players 
+            console.log(allPlayers)
+        })
+    </script>
 </body>
 
 </html>
