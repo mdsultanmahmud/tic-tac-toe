@@ -48,6 +48,7 @@
         const loading = document.getElementById("loading")
         const btnContainer = document.getElementById("btn-container")
         const searchPlayer = document.getElementById("search-player")
+        let move = "X"
         // display hidden some filed 
         playerContainer.style.display = "none"
         valueContainer.style.display = "none"
@@ -97,9 +98,13 @@
         document.querySelectorAll(".btn").forEach(e => {
             e.addEventListener("click", () => {
                 let value = document.getElementById("value").innerText
-                e.innerText = value
+                if (value == move) {
+                    e.innerText = value
+                    socket.emit("playing", { value: value, id: e.id, name: name })
+                }else{
+                    alert("Now, your opponent turn")
+                }
 
-                socket.emit("playing", { value: value, id: e.id, name: name })
             })
         })
 
@@ -112,8 +117,10 @@
 
             if (foundPlayer.count % 2 == 0) {
                 whosTurn.innerText = "O's Turn"
+                move = "O"
             } else {
                 whosTurn.innerText = "X's Turn"
+                move = "X"
             }
 
             if (p1id != '') {
@@ -144,25 +151,25 @@
 
             if ((b1 == b2 && b2 == b3) || (b4 == b5 && b5 == b6) || (b7 == b8 && b8 == b9) || (b1 == b4 && b4 == b7) || (b2 == b5 && b5 == b8) || (b3 == b6 && b6 == b9) || (b1 == b5 && b5 == b9) || (b3 == b5 && b5 == b7)) {
                 socket.emit("game-over", { name: name })
-
-                setTimeout(() => {
+                
+                socket.on("finish", e => {
+                    console.log(e)
                     count % 2 == 0 ? alert("X is the winner!!!!!") : alert("O is the winner!!!!!")
+                })
+                setTimeout(() => {
+                    location.reload()
+                }, 4000);
 
-                    setTimeout(() => {
-                        location.reload()
-                    }, 3000);
-                }, 100);
             }
 
             else if (count >= 10) {
                 socket.emit("game-over", { name: name })
-
-                setTimeout(() => {
+                socket.on("finish", e => {
                     alert("game is draw!!!")
-                    setTimeout(() => {
-                        location.reload()
-                    }, 5000);
-                }, 100);
+                })
+                setTimeout(() => {
+                    location.reload()
+                }, 4000);
             }
 
         }

@@ -62,6 +62,13 @@ io.on("connection", (socket) =>{
 
         io.emit("playing", {allPlayers: allPlayers})
     })
+
+    // after finishing the game delete players array 
+    socket.on("game-over", (e) =>{
+        console.log(e)
+        io.emit("finish", {success: true, msg: "game is over"})
+        allPlayers = allPlayers.filter(player => player.p1.p1name != e.name)
+    })
 })
 
 
